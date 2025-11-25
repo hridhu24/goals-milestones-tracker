@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional pastel font smoothing */
+body {
+  -webkit-font-smoothing: antialiased;
+}
