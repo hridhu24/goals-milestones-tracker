@@ -19,53 +19,45 @@
  */
 
 
-const STORAGE_KEY = "goals_milestones_v1";
+const STORAGE_KEY = "goals-data";
 
-/**
- * Load goals from LocalStorage
- * @returns {Goal[]}
- */
-export function loadGoals() {
-  const data = localStorage.getItem(STORAGE_KEY);
-  if (!data) return [];
-  
+// Load all goals
+export function loadAllGoals() {
   try {
-    return JSON.parse(data);
-  } catch (err) {
-    console.error("Error parsing stored goals:", err);
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch (error) {
+    console.error("Error loading goals:", error);
     return [];
   }
 }
 
-/**
- * Save goals in LocalStorage
- * @param {Goal[]} goals
- */
-export function saveGoals(goals) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
-}
-
-/**
- * Export all data as downloadable JSON
- */
-export function exportJSON() {
-  const data = loadGoals();
-  return JSON.stringify(data, null, 2);
-}
-
-/**
- * Replace stored data with imported JSON
- * @param {string} json
- */
-export function importJSON(json) {
+// Save all goals
+export function saveAllGoals(goals) {
   try {
-    const parsed = JSON.parse(json);
-    saveGoals(parsed);
-    return true;
-  } catch (err) {
-    console.error("Invalid JSON:", err);
-    return false;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
+  } catch (error) {
+    console.error("Error saving goals:", error);
   }
 }
 
+// Export JSON string
+export function exportJSON() {
+  const data = loadAllGoals();
+  return JSON.stringify(data, null, 2);
+}
 
+// Import JSON data
+export function importJSON(jsonString) {
+  try {
+    const parsed = JSON.parse(jsonString);
+    if (Array.isArray(parsed)) {
+      saveAllGoals(parsed);
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error("Invalid JSON import:", error);
+    return false;
+  }
+}
