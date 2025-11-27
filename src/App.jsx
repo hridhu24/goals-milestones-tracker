@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+
 import Dashboard from "./pages/Dashboard";
 import GoalDetails from "./pages/GoalDetails";
 import TimelineView from "./pages/TimelineView";
@@ -9,10 +10,10 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#121212] text-black dark:text-white transition">
       <Header />
 
-      <main className="flex-1">
+      <main className="flex-1 p-4">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/goal/:id" element={<GoalDetails />} />

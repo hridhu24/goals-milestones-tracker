@@ -18,10 +18,13 @@
  * @property {number} progress
  */
 
-
 const STORAGE_KEY = "goals-data";
 
-// Load all goals
+/* ===========================
+      CORE FUNCTIONS
+=========================== */
+
+// Load all goals (real storage function)
 export function loadAllGoals() {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
@@ -41,13 +44,15 @@ export function saveAllGoals(goals) {
   }
 }
 
-// Export JSON string
+/* ===========================
+     EXPORT/IMPORT HELPERS
+=========================== */
+
 export function exportJSON() {
   const data = loadAllGoals();
   return JSON.stringify(data, null, 2);
 }
 
-// Import JSON data
 export function importJSON(jsonString) {
   try {
     const parsed = JSON.parse(jsonString);
@@ -61,3 +66,12 @@ export function importJSON(jsonString) {
     return false;
   }
 }
+
+/* ===========================
+   COMPATIBILITY EXPORTS
+   (For GoalsContext)
+=========================== */
+
+// These ensure GoalsContext continues to work
+export const loadGoals = loadAllGoals;
+export const saveGoals = saveAllGoals;

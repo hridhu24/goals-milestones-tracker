@@ -88,15 +88,57 @@ export const GoalsContextProvider = ({ children }) => {
     saveGoals(updated);
   };
 
+  const toggleMilestone = (goalId, milestoneId) => {
+    const updated = goals.map((g) =>
+      g.id === goalId
+        ? {
+            ...g,
+            milestones: g.milestones.map((m) =>
+              m.id === milestoneId
+                ? {
+                  ...m,
+                  status: m.status === "completed" ? "pending" : "completed",
+                  }
+              : m
+            ),
+          }
+        : g
+    );
+
+    setGoals(updated);
+    saveGoals(updated);
+  };
+
+  const deleteMilestone = (goalId, milestoneId) => {
+    const updated = goals.map((g) =>
+      g.id === goalId
+        ? {
+            ...g,
+            milestones: g.milestones.filter((m) => m.id !== milestoneId),
+          }
+        : g
+    );
+
+    setGoals(updated);
+    saveGoals(updated);
+  };
+
+
+
+  
+
   return (
     <GoalsContext.Provider
       value={{
         goals,
+        setGoals,
         addGoal,
         updateGoal,
         deleteGoal,
         addMilestone,
         updateMilestone,
+        toggleMilestone,
+        deleteMilestone,
       }}
     >
       {children}
